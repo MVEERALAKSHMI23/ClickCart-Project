@@ -13,7 +13,7 @@ function ProductList(){
 
     const fetchProducts= async ()=>{
       try {
-        const res=await axios.get("http://localhost:5000/api/products");
+        const res=await axios.get("https://clickcart-backend-x84x.onrender.com/api/products");
         setProducts(res.data);
       } catch (error) {
         console.log("error");
