@@ -20,7 +20,7 @@ function Admin() {
    },[]);
    const fetchProducts=async ()=>{
     try {
-      const res=await axios.get("http://localhost:5000/api/products");
+      const res=await axios.get("https://clickcart-backend-x84x.onrender.com/api/products");
       setProducts(res.data);
     } catch (error) {
       console.log(error);
@@ -33,11 +33,11 @@ const handleSubmit = async (e) => {
   try {
     if (editId !== null)
        {
-      await axios.put(`http://localhost:5000/api/products/${editId}`,{name,price,image,category,description});
+      await axios.put(`https://clickcart-backend-x84x.onrender.com/api/products/${editId}`,{name,price,image,category,description});
       alert("Product Updated");
       setEditId(null);
     } else {
-       await axios.post("http://localhost:5000/api/products",{name,price,image,category,description});
+       await axios.post("https://clickcart-backend-x84x.onrender.com/api/products",{name,price,image,category,description});
   
   alert("Product Added");
     }
@@ -66,7 +66,7 @@ const handleEdit = (product) => {
 const deleteProduct = async (id) => {
   
   try{
-  await axios.delete(`http://localhost:5000/api/products/${id}`);
+  await axios.delete(`https://clickcart-backend-x84x.onrender.com/api/products/${id}`);
   fetchProducts();
   } catch (error){
     console.log(error);

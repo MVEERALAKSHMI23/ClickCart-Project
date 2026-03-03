@@ -17,7 +17,7 @@ import axios from "axios";
        const handleLogin=async(e)=>{
         e.preventDefault();
         const response=await 
-        fetch("http://localhost:5000/api/auth/login",{
+        fetch("https://clickcart-backend-x84x.onrender.com/api/auth/login",{
             method: "POST",
             headers:{
                 "Content-type":"application/json"
