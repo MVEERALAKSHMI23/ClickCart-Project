@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Checkout() {
     const navigate = useNavigate();
@@ -24,22 +25,25 @@ function Checkout() {
 
     const handlePayment = async (e) => {
         e.preventDefault();
-            const response = await fetch("https://clickcart-backend-x84x.onrender.com/api/payment", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    userId:"12345",
-                    items:cartData,
-                    totalAmount:totalPrice,
-                    paymentMethod:"COD",
-                    shippingAddress: formData
-                }),
-            });
-            const data = await response.json();
-            console.log(data);
-            if (data.success){
+        console.log("Total Price:",totalPrice);
+        try{
+            const response = await fetch(`${API_URL}/api/payment/create-order`, {
+                method : "POST",
+                headers:{"Content-Type":"application/json",},
+                body:JSON.stringify({amount :Number (totalPrice),}),
+                });
+                const data = await response.json();
+                const options = {
+                    key : "rzp_test_SKHBX6CuoxXElC",
+                    amount : data.amount,
+                    currency : data.currency,
+                    name:"ClickCart",
+                    description : "Order Payment",
+                    order_id:data.id,
+
+                    handler:function(response){
+                        alert("Payment Successful");
+                        
                 const currentUser =JSON.parse(localStorage.getItem("currentUser"));
                 console.log(currentUser);
                 const newOrder = {
@@ -49,20 +53,30 @@ function Checkout() {
                     date:new Date().toLocaleString(),
                     user:currentUser?.email,
                     items:cartData,
-                    total:totalPrice
+                    total:totalPrice,
+                    
+                    paymentId:response.razorpay_payment_id,
+                    
                 };
                 const existingOrders = JSON.parse(localStorage.getItem("orders"))||[];
                 existingOrders.push(newOrder);
                 localStorage.setItem("orders",JSON.stringify(existingOrders));
 
-                localStorage.setItem("cart",JSON.stringify([]));
-                navigate("/success")
-                window.location.reload();
-            } else {
+                localStorage.removeItem("cart");
+                window.location.href="/success";
+
+                    },
+                };
+                const rzp = new window.Razorpay(options);
+                rzp.open();
+
+        }    
+            catch (error) {
+                  console.error("Payment Error:",error);
                 alert("Payment failed");
             }
-    };
 
+        }
     return (
 
         <div style={{ padding: "20px", color:"black" }}>
@@ -102,8 +116,7 @@ function Checkout() {
                 </button>
 
             </form>
-
-        </div>
+</div>
 
     );
 
