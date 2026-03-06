@@ -1,9 +1,11 @@
 import {Link} from "react-router-dom";
+import logo from "../assets/logo.png";
 
 function Home(){
     return(
         <div className="w-full min-h-screen bg-gradient-to-r 
             from-blue-200 to-purple-600">
+                <img src={logo} alt="ClickCart Logo" style={{height:"80px",border:"1px solid none",borderRadius:"40px",padding:"5px"}}/>
             <div className="w-full h-[85svh] bg-gradient-to-r 
             from-blue-200 to-purple-600 flex flex-col justify-center items-center text-black text-center px-4">
                 

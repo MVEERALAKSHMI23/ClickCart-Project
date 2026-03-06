@@ -1,5 +1,6 @@
 import { Link,useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
+import logo from "../assets/logo.png";
 
 function Navbar(){
     const navigate =useNavigate();
@@ -31,7 +32,7 @@ function Navbar(){
     return(
         
             <div style={{border:"1px solid grey",padding:"10px",borderRadius:"10px",backgroundColor:"grey",color:"black",fontSize:"2xl",width:"full",display:"flex",justifyContent:"space-between",fontWeight:"bold"}}>
-            
+            <img src={logo} alt="ClickCart Logo" style={{height:"50px",border:"1px solid none",borderRadius:"40px"}}/>
             
             <Link to = "/products" className="hover:text-gray-300">Product</Link>
             <Link to = "/cart" className="hover:text-gray-300">Cart ({cartCount})</Link>
@@ -40,7 +41,7 @@ function Navbar(){
             <div >
             {user ? (
                 <>
-                <span>Welcome to ClickCart</span>
+                <span style={{color:"white",padding:"12px"}}>Welcome to ClickCart</span>
                 <button onClick={handleLogout} className="hover:text-gray-300">Logout</button>
                 </>
              ):(

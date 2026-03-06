@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import logo from "../assets/logo.png"
  function Login() {
     const navigate = useNavigate();
     const [formData, setFormData]= useState({
@@ -39,6 +40,7 @@ import axios from "axios";
 
     return(
         <div style={{padding:"20px",textAlign:"center"}}>
+            <img src={logo} alt="ClickCart Logo" style={{height:"80px",border:"1px solid none",borderRadius:"40px",padding:"5px"}}/>
             <h1 style={{color:"white",marginBottom:"10px"}}>Hello Welcome back...Your next great purchase is just a login away..</h1>
             <h1>Login</h1>
             <form onSubmit={handleLogin}>

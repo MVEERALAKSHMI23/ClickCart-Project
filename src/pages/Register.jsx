@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
+import logo from "../assets/logo.png"
 
 function Register(){
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ function Register(){
 
     return(
         <div style={{padding:"20px",textAlign:"center"}}>
+            <img src={logo} alt="ClickCart Logo" style={{height:"80px",border:"1px solid none",borderRadius:"40px",padding:"5px"}}/>
             <h1 style={{textAlign:"center",fontWeight:"bold"}}>ClickCart</h1>
             <h1 style={{marginBottom:"10px",fontSize:"3xl"}}>Join us and discover better shopping...</h1>
             <h1 style={{fontWeight:"bold"}}>Register</h1>
