@@ -1,7 +1,9 @@
 import { use, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
+import { signInWithPopup } from "firebase/auth";
+import {auth , provider } from "../firebase";
  function Login() {
     const navigate = useNavigate();
     const [formData, setFormData]= useState({
@@ -15,6 +17,8 @@ import logo from "../assets/logo.png"
             [e.target.name]:e.target.value
         });
        };
+
+
        const handleLogin=async(e)=>{
         e.preventDefault();
         const response=await 
@@ -29,14 +33,33 @@ import logo from "../assets/logo.png"
         console.log(data);
         localStorage.setItem("currentUser",JSON.stringify(data));
               alert("Login successful");
+              
         if (data.isAdmin){
             navigate("/admin");
         } else {
             navigate("/products");
         }
         
+                }
         
-    };
+
+
+    const handleGoogleLogin = async ()=>{
+            try {
+                const result = await signInWithPopup(auth,provider);
+                const user = result.user;
+                console.log("Google User:",user);
+                const userData = {
+                    name : user.displayName,
+                    email:user.email
+                };
+                localStorage.setItem("currentUser",JSON.stringify(userData));
+                alert("Login successful:" +user.displayName);
+                navigate("/products");
+            } catch (error) {
+                console.log(error);
+            } };
+
 
     return(
         <div style={{padding:"20px",textAlign:"center"}}>
@@ -50,8 +73,11 @@ import logo from "../assets/logo.png"
                 <br/> <br/>
 
                 <button style={{border:"1px solid black",padding:"5px", marginBottom:"10px",backgroundColor:"blue", borderRadius:"10px",fontWeight:"bold"}} type="submit">Login</button>
+                
+
                  <p>If you are not register already , kindly Sing up here.. <span onClick={()=>navigate("/register")} style={{backgroundColor:"blue",fontWeight:"bold",border:"1px solid black",cursor:"pointer",padding:"5px", marginBottom:"10px",borderRadius:"10px"}}>Register Here</span></p>
             </form>
+            <button  type="button" onClick={handleGoogleLogin} style={{border:"1px solid black",padding:"5px", marginBottom:"10px",backgroundColor:"blue", borderRadius:"10px",fontWeight:"bold"}}> Login with Google </button>
 
         </div>
     );
